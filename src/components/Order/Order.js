@@ -5,8 +5,8 @@ const order = (props) => {
     const ingredients = [];
     for (let name in props.ingredients) {
         ingredients.push({
-            name: matchMedia,
-            amount: props.ingredients[name]
+            name: name,
+            amount:Number.parseFloat(props.ingredients[name]) 
         })
     }
 
@@ -19,12 +19,12 @@ const order = (props) => {
             border: '1px solid #CCC',
             padding:'5px'
         }}
-        key={ig.name}>{ig.namle} ({ig.amount})</span>
+        key={ig.name}>{ig.name} ({ig.amount})</span>
     })
     return (
         <div className={classes.Order}>
             <p>Ingredients: {ingredientsOutput} </p>
-            <p>Price <strong>{Number.parseFloat(props.price.toFixed(2))}</strong></p>
+            <p>Price <strong>{props.price}</strong></p>
         </div>
     )
 };
