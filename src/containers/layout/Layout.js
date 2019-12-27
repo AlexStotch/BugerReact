@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 
 import Aux from '../Aux';
-import ToolBar from '../../components/Burger/Navigation/Toolbar/Toolbar';
+import ToolBar from '../../components/Navigation/Toolbar/Toolbar';
 import SideDrawer from '../../components/Burger/SideDrawer/SideDrawer';
 import classes from './Layout.css';
 
