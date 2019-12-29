@@ -6,7 +6,8 @@ const burger = (props) => {
     let transforIngredients = Object.keys(props.ingredients)
     .map(igKey => {
         return [...Array(props.ingredients[igKey])].map((_) => {
-            return <BurgerIngredients key={igKey + 1} type={igKey} />
+            let id = Math.random();
+            return <BurgerIngredients key={igKey + id} type={igKey} />
         })
     })
     .reduce((arr, el) => {
