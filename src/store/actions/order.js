@@ -2,9 +2,11 @@ import * as actionTypes from './actionTypes';
 import axios from '../../axios-orders';
 
 export const purchaseBugerSuccess = (id, orderData) => {
+    console.log('id', id)
+    console.log('dtaor', orderData)
     return {
         type: actionTypes.PURCHASE_BUGER_SUCCESS,
-        id: id,
+        orderId: id,
         orderData: orderData
     }
 };
@@ -27,11 +29,16 @@ export const purchaseBuger = (orderData) => {
         dispatch(purchaseBugerStart());
         axios.post( '/orders.json', orderData )
         .then( res => {
-            console.log(res.data)
-            dispatch(purchaseBugerSuccess(res.data, orderData))
+            dispatch(purchaseBugerSuccess(res.data.name, orderData))
         } )
         .catch( error => {
             dispatch(purchaseBugerfailed(error))
         });
     };
+};
+
+export const purchaseInit = () => {
+    return {
+        type: actionTypes.PURSHASE_INIT 
+       }
 };
