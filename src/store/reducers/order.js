@@ -1,4 +1,5 @@
 import * as actionTypes from '../actions/actionTypes';
+import {updateObject} from '../utillity'
 
 const initalState = {
     orders: [],
@@ -9,34 +10,25 @@ const initalState = {
 const reducer = (state = initalState, action) => {
     switch (action.type) {
         case actionTypes.PURSHASE_INIT:
-            console.log('bordel')
-            return {
-                ...state,
-                purchased: false
-            }
+            return updateObject(state, {purchased: false});
         case actionTypes.PURCHASE_BUGER_START:
-        return {
-            ...state,
-            loading: true
-        }
+             return updateObject(state, {loading: false});
         case actionTypes.PURCHASE_BUGER_SUCCESS:
-            const newOrder = {
-                ...action.orderData,
-                id: action.orderId,
-            }
-            console.log('new', newOrder)
-            console.log('orders', state.orders)
-            return {
-                ...state,
-                loading: false,
+            const newOrder = updateObject(action.orderData, {id: action.orderId});
+            return updateObject(state, {  loading: false,
                 purchased: true,
-                orders: state.orders.concat(newOrder)
-            }
+                orders: state.orders.concat(newOrder)});
         case actionTypes.PURCHASE_BUGER_FAILED:
-            return {
-                ...state,
+            return updateObject(state, {loading: false});
+        case actionTypes.FETCH_ORDER_START:
+            return updateObject(state, {loading: true});
+        case actionTypes.FETCH_ORDER_SUCCESS:
+            return updateObject(state, {
+                orders: action.orders,
                 loading: false
-            }
+            });
+        case actionTypes.FETCH_ORDER_FAILED:
+            return updateObject(state, {loading: false});
         default:
             return state    
     }
