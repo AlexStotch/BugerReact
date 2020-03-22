@@ -22,13 +22,27 @@ export const authFail= (error) => {
     };
 };
 
+export const logout = () => {
+    return {
+        type: actionsTypes.AUTH_LOGOUT
+    }
+};
+
+export const checkAuthTimeout = (expirationTime) => {
+    return dispatch => {
+        setTimeout(() => {
+            dispatch(logout())
+        }, expirationTime * 1000) 
+    };
+};
+
 export const auth= (email, password, isSignUp) => {
     return dispatch => {
         dispatch(authStart());
         const authData = {
             password: password,
             email: email,
-            returnSecureTocken: true,
+            returnSecureToken: true, 
         };
         let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyA_tCIAQno5okEmPO4tz1EHeMVTQ-AIQ0o';
         if (!isSignUp) {
@@ -38,10 +52,11 @@ export const auth= (email, password, isSignUp) => {
         .then(res => {
             console.log(res);
             dispatch(authSuccess(res.data.idToken, res.data.localId))
+            dispatch(checkAuthTimeout(1000));
         })
         .catch(err => {
             console.log(err);
-            dispatch(authFail);
+            dispatch(authFail(err.response.data.error));
         })
     };
 };

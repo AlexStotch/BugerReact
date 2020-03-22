@@ -22,10 +22,10 @@ export const purchaseBugerfailed = (error) => {
     }
 };
 
-export const purchaseBuger = (orderData) => {
+export const purchaseBuger = (orderData, token) => {
     return dispatch => {
         dispatch(purchaseBugerStart());
-        axios.post( '/orders.json', orderData )
+        axios.post( '/orders.json?auth='+ token, orderData )
         .then( res => {
             dispatch(purchaseBugerSuccess(res.data.name, orderData))
         } )
@@ -61,10 +61,10 @@ export const fetchOrderFailed = (error) => {
     }
 };
 
-export const fetchOrders = () => {
+export const fetchOrders = (token) => {
     return dispatch => {
         dispatch(fetchOrderStart());
-        axios.get('/orders.json')
+        axios.get('/orders.json?auth=' + token)
         .then(res => {
             const fetchOrders = [];
             for (let key in res.data) {
